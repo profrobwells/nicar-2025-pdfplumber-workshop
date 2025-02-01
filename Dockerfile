@@ -15,7 +15,6 @@ RUN apt-get -qy install gcc
 COPY . ${HOME}
 RUN pip install --no-cache --upgrade pip
 RUN pip install -r ${HOME}/config/requirements.txt
-RUN pip install --no-cache -U "jupyter-server<2.0.0"
 
 RUN chown -R ${NB_UID} ${HOME}
 WORKDIR ${HOME}

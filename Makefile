@@ -1,4 +1,4 @@
-.PHONY: notebooks
+.PHONY: notebooks clear pdfs requirements venv test lab lint format
 
 ALL_PDFS=$(patsubst src/%,pdfs/%,$(wildcard src/*.pdf))
 ALL_NOTEBOOKS=$(wildcard notebooks/*.ipynb)
@@ -12,7 +12,7 @@ clear:
 pdfs: $(ALL_PDFS)
 
 requirements: config/requirements.in
-	@cd config && pip-compile requirements.in
+	@pip-compile $< > config/requirements.txt
 
 venv: config/requirements.txt
 	@if [ ! -d "venv" ]; then python3 -m venv venv; fi
