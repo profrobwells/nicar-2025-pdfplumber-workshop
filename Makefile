@@ -12,26 +12,26 @@ clear:
 pdfs: $(ALL_PDFS)
 
 requirements: config/requirements.in
-	@pip-compile $< > config/requirements.txt
+	@cd config && uv pip compile requirements.in > requirements.txt
 
 venv: config/requirements.txt
-	@if [ ! -d "venv" ]; then python3 -m venv venv; fi
-	@venv/bin/pip install -r config/requirements.txt
+	@uv venv
+	@uv pip install -r config/requirements.txt
 
 test:
-	@venv/bin/nbexec notebooks
+	nbexec notebooks
 
 lab:
-	@venv/bin/jupyter lab
+	jupyter lab
 
 lint:
-	venv/bin/nbqa black --check notebooks
-	venv/bin/nbqa isort --check notebooks
-	venv/bin/nbqa flake8 notebooks --max-line-length 88
+	nbqa black --check notebooks
+	nbqa isort --check notebooks
+	nbqa flake8 notebooks --max-line-length 88
 
 format:
-	venv/bin/nbqa black notebooks
-	venv/bin/nbqa isort notebooks
+	nbqa black notebooks
+	nbqa isort notebooks
 
 notebooks:
-	venv/bin/nbexec notebooks
+	nbexec notebooks

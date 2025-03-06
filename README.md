@@ -4,16 +4,22 @@
 
 ## Local installation instructions
 
+## Install `uv` if not already installed
+
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
 ### Install dependencies
 
 ```
-make venv
+uv run make venv
 ```
 
 ### Test that the installation worked
 
 ```
-make test
+uv run make test
 ```
 
 ... should not throw an error.
@@ -21,5 +27,5 @@ make test
 ## Running Jupyter Lab
 
 ```
-make lab
+uv run make lab
 ```

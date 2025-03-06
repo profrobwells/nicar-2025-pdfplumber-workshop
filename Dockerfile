@@ -1,4 +1,5 @@
-FROM python:3.10-slim
+FROM python:3.12-slim-bookworm
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ARG NB_USER=pdfplumber
 ARG NB_UID=1000
@@ -10,12 +11,11 @@ RUN adduser --disabled-password \
     ${NB_USER}
 
 RUN apt-get -q update && apt-get -qy dist-upgrade
-RUN apt-get -qy install gcc
+RUN apt-get -qy install gcc make
 
 COPY . ${HOME}
-RUN pip install --no-cache --upgrade pip
-RUN pip install -r ${HOME}/config/requirements.txt
+WORKDIR ${HOME}
+RUN uv run make venv
 
 RUN chown -R ${NB_UID} ${HOME}
-WORKDIR ${HOME}
 USER ${USER}
